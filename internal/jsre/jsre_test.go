@@ -74,6 +74,21 @@ func TestExec(t *testing.T) {
 	jsre.Stop(false)
 }
 
+func TestMathRandom(t *testing.T) {
+	t.Parallel()
+
+	jsre := New("", os.Stdout)
+	defer jsre.Stop(false)
+
+	val, err := jsre.Run("Math.random()")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+	if got := val.ToFloat(); got < 0 || got >= 1 {
+		t.Fatalf("expected value in [0, 1), got %v", got)
+	}
+}
+
 func TestNatto(t *testing.T) {
 	t.Parallel()
 
